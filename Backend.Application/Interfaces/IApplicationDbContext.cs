@@ -46,6 +46,7 @@ public interface IApplicationDbContext
     DbSet<StockAlertConfig> StockAlertConfigs { get; }
     DbSet<StockTake> StockTakes { get; }
     DbSet<StockTakeItem> StockTakeItems { get; }
+    DbSet<StockTakeItemBag> StockTakeItemBags { get; }
     DbSet<StockTakeStatus> StockTakeStatuses { get; }
     DbSet<Supplier> Suppliers { get; }
     DbSet<UnitOfMeasure> UnitOfMeasures { get; }
@@ -55,6 +56,7 @@ public interface IApplicationDbContext
     DbSet<CustomerReturnOrderItem> CustomerReturnOrderItems { get; }
     DbSet<CustomerReturnOrderStatus> CustomerReturnOrderStatuses { get; }
     DbSet<CustomerReturnOrderItemAllocation> CustomerReturnOrderItemAllocations { get; }
+    DbSet<CustomerFeedback> CustomerFeedbacks { get; }
     DbSet<ReturnToSupplierOrder> ReturnToSupplierOrders { get; }
     DbSet<ReturnToSupplierOrderItem> ReturnToSupplierOrderItems { get; }
     DbSet<ReturnToSupplierOrderStatus> ReturnToSupplierOrderStatuses { get; }
@@ -71,7 +73,9 @@ public interface IApplicationDbContext
     DbSet<PaddyLotBag> PaddyLotBags { get; }
     DbSet<PaddyLotBagContent> PaddyLotBagContents { get; }
     DbSet<PaddyLotBagMovement> PaddyLotBagMovements { get; }
+    DbSet<PaddyLotBagAllocation> PaddyLotBagAllocations { get; }
     DbSet<QualityInspection> QualityInspections { get; }
+    DbSet<QualityInspectionBagResult> QualityInspectionBagResults { get; }
     DbSet<MillingOrderStatus> MillingOrderStatuses { get; }
     DbSet<MillingYieldConfig> MillingYieldConfigs { get; }
     DbSet<MillingOrder> MillingOrders { get; }
@@ -82,6 +86,7 @@ public interface IApplicationDbContext
     DbSet<StockTransferStatus> StockTransferStatuses { get; }
     DbSet<StockTransfer> StockTransfers { get; }
     DbSet<StockTransferItem> StockTransferItems { get; }
+    DbSet<StockTransferBag> StockTransferBags { get; }
 
     // non-paddy/PO
     DbSet<Customer> Customers { get; }

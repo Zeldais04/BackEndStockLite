@@ -458,6 +458,90 @@ namespace Backend.Infrastructure.Migrations
                     b.ToTable("Customer", (string)null);
                 });
 
+            modelBuilder.Entity("Backend.Domain.Entities.CustomerFeedback", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("varchar(2000)");
+
+                    b.Property<string>("FeedbackType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("OutboundOrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("OutboundOrderItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PaddyLotBagAllocationId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ProductVariantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ResolutionNote")
+                        .HasMaxLength(2000)
+                        .HasColumnType("varchar(2000)");
+
+                    b.Property<string>("ResolutionStatus")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<DateTime?>("ResolvedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int?>("ResolvedBy")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SalesOrderId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Severity")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OutboundOrderId");
+
+                    b.HasIndex("OutboundOrderItemId");
+
+                    b.HasIndex("PaddyLotBagAllocationId");
+
+                    b.HasIndex("ProductVariantId");
+
+                    b.HasIndex("ResolvedBy");
+
+                    b.HasIndex("SalesOrderId");
+
+                    b.ToTable("CustomerFeedback", (string)null);
+                });
+
             modelBuilder.Entity("Backend.Domain.Entities.CustomerReturnOrder", b =>
                 {
                     b.Property<int>("Id")
@@ -477,6 +561,16 @@ namespace Backend.Infrastructure.Migrations
                     b.Property<DateTime?>("ApprovedDate")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("CancellationReason")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
+
+                    b.Property<DateTime?>("CancelledAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int?>("CancelledByUserId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("CompletedDate")
                         .HasColumnType("datetime(6)");
 
@@ -492,6 +586,9 @@ namespace Backend.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<int?>("CustomerFeedbackId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
@@ -502,6 +599,12 @@ namespace Backend.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("decimal(18,2)")
                         .HasDefaultValue(0m);
+
+                    b.Property<DateTime?>("InspectedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int?>("InspectedByUserId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
@@ -519,10 +622,38 @@ namespace Backend.Infrastructure.Migrations
                     b.Property<int?>("OutboundOrderId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("ReceivedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int?>("ReceivedByUserId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("RefundPendingAmount")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("decimal(18,2)")
                         .HasDefaultValue(0m);
+
+                    b.Property<string>("RefundStatus")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)")
+                        .HasDefaultValue("NOT_APPLICABLE");
+
+                    b.Property<decimal>("RefundedAmount")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(18,2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<DateTime?>("RejectedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int?>("RejectedByUserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RejectionReason")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
 
                     b.Property<string>("ReturnCode")
                         .IsRequired()
@@ -532,6 +663,12 @@ namespace Backend.Infrastructure.Migrations
                     b.Property<string>("ReturnReason")
                         .HasMaxLength(500)
                         .HasColumnType("varchar(500)");
+
+                    b.Property<DateTime?>("SubmittedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int?>("SubmittedByUserId")
+                        .HasColumnType("int");
 
                     b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
@@ -544,6 +681,9 @@ namespace Backend.Infrastructure.Migrations
                     b.HasIndex("ApprovedBy");
 
                     b.HasIndex("ConfirmedByUserId");
+
+                    b.HasIndex("CustomerFeedbackId")
+                        .IsUnique();
 
                     b.HasIndex("CustomerId");
 
@@ -661,6 +801,13 @@ namespace Backend.Infrastructure.Migrations
                     b.Property<int>("CustomerReturnOrderItemId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Disposition")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)")
+                        .HasDefaultValue("PENDING_INSPECTION");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
@@ -689,6 +836,9 @@ namespace Backend.Infrastructure.Migrations
                     b.Property<decimal>("QuantityGood")
                         .HasColumnType("decimal(18,3)");
 
+                    b.Property<decimal>("QuantityReceived")
+                        .HasColumnType("decimal(18,3)");
+
                     b.Property<decimal>("QuantityRejected")
                         .HasColumnType("decimal(18,3)");
 
@@ -697,6 +847,13 @@ namespace Backend.Infrastructure.Migrations
 
                     b.Property<int?>("QuarantineLocationId")
                         .HasColumnType("int");
+
+                    b.Property<int?>("RejectedLocationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RejectionReason")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
 
                     b.Property<int?>("RestockLocationId")
                         .HasColumnType("int");
@@ -724,9 +881,16 @@ namespace Backend.Infrastructure.Migrations
 
                     b.HasIndex("QuarantineLocationId");
 
+                    b.HasIndex("RejectedLocationId");
+
                     b.HasIndex("RestockLocationId");
 
-                    b.ToTable("CustomerReturnOrderItemAllocation", (string)null);
+                    b.ToTable("CustomerReturnOrderItemAllocation", null, t =>
+                        {
+                            t.HasCheckConstraint("CK_CustomerReturnAllocation_CreditAmount", "CreditAmount >= 0 AND UnitCreditPrice >= 0");
+
+                            t.HasCheckConstraint("CK_CustomerReturnAllocation_Quantities", "QuantityReturned > 0 AND QuantityReceived >= 0 AND QuantityGood >= 0 AND QuantityDamaged >= 0 AND QuantityRejected >= 0 AND CreditQuantity >= 0");
+                        });
                 });
 
             modelBuilder.Entity("Backend.Domain.Entities.CustomerReturnOrderStatus", b =>
@@ -810,7 +974,7 @@ namespace Backend.Infrastructure.Migrations
                             Color = "#10B981",
                             CreatedDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
-                            Name = "Đã nhận lại hàng"
+                            Name = "Hoàn tất"
                         },
                         new
                         {
@@ -820,6 +984,33 @@ namespace Backend.Infrastructure.Migrations
                             CreatedDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             Name = "Đã hủy"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Code = "PENDING_APPROVAL",
+                            Color = "#8B5CF6",
+                            CreatedDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            Name = "Chờ duyệt"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Code = "RECEIVED",
+                            Color = "#06B6D4",
+                            CreatedDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            Name = "Đã nhận hàng"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Code = "REJECTED",
+                            Color = "#DC2626",
+                            CreatedDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            Name = "Từ chối"
                         });
                 });
 
@@ -1315,6 +1506,9 @@ namespace Backend.Infrastructure.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
 
+                    b.Property<int?>("StockTransferId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("SupplierId")
                         .HasColumnType("int");
 
@@ -1345,6 +1539,9 @@ namespace Backend.Infrastructure.Migrations
 
                     b.HasIndex("PurchaseOrderId")
                         .HasDatabaseName("IX_InboundOrder_PurchaseOrderId");
+
+                    b.HasIndex("StockTransferId")
+                        .HasDatabaseName("IX_InboundOrder_StockTransferId");
 
                     b.HasIndex("SupplierId");
 
@@ -1748,19 +1945,22 @@ namespace Backend.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<bool>("IsQuarantine")
-                        .HasColumnType("tinyint(1)");
-
                     b.Property<bool>("IsOutboundStaging")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("tinyint(1)")
                         .HasDefaultValue(false);
+
+                    b.Property<bool>("IsQuarantine")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<bool>("IsSingleTypeColumn")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<DateTime?>("LastModifiedDate")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<decimal?>("MaxCapacity")
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<int?>("OutboundLockOrderId")
                         .HasColumnType("int");
@@ -1772,9 +1972,6 @@ namespace Backend.Infrastructure.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("int")
                         .HasComputedColumnSql("CASE WHEN `IsOutboundStaging` = 1 AND `IsDeleted` = 0 THEN `WarehouseId` ELSE NULL END", false);
-
-                    b.Property<decimal?>("MaxCapacity")
-                        .HasColumnType("decimal(18,3)");
 
                     b.Property<int>("Priority")
                         .HasColumnType("int");
@@ -1829,12 +2026,12 @@ namespace Backend.Infrastructure.Migrations
                         .IsUnique()
                         .HasDatabaseName("UX_Location_OneOutboundStagingPerWarehouse");
 
-                    b.HasIndex("WarehouseId", "IsOutboundStaging", "IsActive", "IsDeleted")
-                        .HasDatabaseName("IX_Location_OutboundStaging");
-
                     b.HasIndex("QrCode")
                         .IsUnique()
                         .HasDatabaseName("UX_Location_QrCode");
+
+                    b.HasIndex("WarehouseId", "IsOutboundStaging", "IsActive", "IsDeleted")
+                        .HasDatabaseName("IX_Location_OutboundStaging");
 
                     b.HasIndex("WarehouseId", "IsActive", "IsDeleted", "IsQuarantine", "CurrentProductVariantId")
                         .HasDatabaseName("IX_Location_PutawayCandidate");
@@ -1953,6 +2150,16 @@ namespace Backend.Infrastructure.Migrations
                             IsDeleted = false,
                             IsSellable = false,
                             Name = "Đã dùng hết"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Code = "REJECTED_RETURN",
+                            Color = "#DC2626",
+                            CreatedDate = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
+                            IsSellable = false,
+                            Name = "Trả lại sau kiểm định"
                         });
                 });
 
@@ -3152,6 +3359,10 @@ namespace Backend.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("varchar(100)");
 
+                    b.Property<string>("ScaleDeviceRef")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
+
                     b.Property<int?>("SourceBagId")
                         .HasColumnType("int");
 
@@ -3168,6 +3379,16 @@ namespace Backend.Infrastructure.Migrations
 
                     b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("WeighedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int?>("WeighedBy")
+                        .HasColumnType("int");
+
+                    b.Property<string>("WeightCaptureMethod")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
 
                     b.Property<decimal>("WeightKg")
                         .HasColumnType("decimal(18,3)");
@@ -3198,14 +3419,14 @@ namespace Backend.Infrastructure.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<decimal>("AllocatedWeightKg")
-                        .HasPrecision(18, 3)
-                        .HasColumnType("decimal(18,3)");
-
                     b.Property<int?>("ActiveBagId")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("int")
                         .HasComputedColumnSql("CASE WHEN `Status` = 'ACTIVE' AND `IsDeleted` = 0 THEN `BagId` ELSE NULL END", true);
+
+                    b.Property<decimal>("AllocatedWeightKg")
+                        .HasPrecision(18, 3)
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<int>("BagId")
                         .HasColumnType("int");
@@ -3229,6 +3450,16 @@ namespace Backend.Infrastructure.Migrations
 
                     b.Property<DateTime?>("LastModifiedDate")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime?>("PickedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int?>("PickedBy")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("PickedWeightKg")
+                        .HasPrecision(18, 3)
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<int>("ReferenceId")
                         .HasColumnType("int");
@@ -3390,6 +3621,9 @@ namespace Backend.Infrastructure.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<decimal?>("AcceptedWeightKg")
+                        .HasColumnType("decimal(18,3)");
+
                     b.Property<decimal>("ActualWeightKg")
                         .HasColumnType("decimal(18,3)");
 
@@ -3410,6 +3644,9 @@ namespace Backend.Infrastructure.Migrations
 
                     b.Property<decimal>("DebtAmount")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("DebtDueDate")
+                        .HasColumnType("datetime(6)");
 
                     b.Property<int>("FarmerId")
                         .HasColumnType("int");
@@ -3433,6 +3670,12 @@ namespace Backend.Infrastructure.Migrations
                     b.Property<int?>("ProductVariantId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("QcFinalizedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int?>("QcFinalizedBy")
+                        .HasColumnType("int");
+
                     b.Property<string>("QualityJson")
                         .HasColumnType("json");
 
@@ -3443,6 +3686,9 @@ namespace Backend.Infrastructure.Migrations
 
                     b.Property<DateTime>("ReceiptDate")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<decimal?>("RejectedWeightKg")
+                        .HasColumnType("decimal(18,3)");
 
                     b.Property<int?>("RiceVarietyId")
                         .HasColumnType("int");
@@ -4426,6 +4672,12 @@ namespace Backend.Infrastructure.Migrations
                     b.Property<decimal?>("AffectedWeightKg")
                         .HasColumnType("decimal(18,3)");
 
+                    b.Property<DateTime?>("CompletedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int?>("CompletedBy")
+                        .HasColumnType("int");
+
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
 
@@ -4441,6 +4693,10 @@ namespace Backend.Infrastructure.Migrations
 
                     b.Property<DateTime>("InspectedAt")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<string>("InspectionType")
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)");
 
                     b.Property<int?>("InspectorId")
                         .HasColumnType("int");
@@ -4492,6 +4748,92 @@ namespace Backend.Infrastructure.Migrations
                         .HasDatabaseName("IX_QualityInspection_PaddyLotId");
 
                     b.ToTable("QualityInspection", (string)null);
+                });
+
+            modelBuilder.Entity("Backend.Domain.Entities.QualityInspectionBagResult", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BagId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Disposition")
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)");
+
+                    b.Property<string>("Handling")
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<decimal?>("ImpurityPercent")
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<DateTime>("InspectedAt")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int?>("InspectorId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<decimal?>("MoisturePercent")
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<string>("MoldLevel")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(1000)
+                        .HasColumnType("varchar(1000)");
+
+                    b.Property<string>("PackagingStatus")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("PestLevel")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<int>("QualityInspectionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("QualityResult")
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InspectorId");
+
+                    b.HasIndex("BagId", "InspectedAt")
+                        .HasDatabaseName("IX_QualityInspectionBagResult_BagId_InspectedAt");
+
+                    b.HasIndex("QualityInspectionId", "BagId")
+                        .IsUnique()
+                        .HasDatabaseName("UQ_QualityInspectionBagResult_InspectionId_BagId");
+
+                    b.HasIndex("QualityInspectionId", "Disposition")
+                        .HasDatabaseName("IX_QualityInspectionBagResult_InspectionId_Disposition");
+
+                    b.ToTable("QualityInspectionBagResult", (string)null);
                 });
 
             modelBuilder.Entity("Backend.Domain.Entities.ReturnToSupplierOrder", b =>
@@ -5178,6 +5520,9 @@ namespace Backend.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<bool>("IsQuarantineScope")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<DateTime?>("LastModifiedDate")
                         .HasColumnType("datetime(6)");
 
@@ -5188,6 +5533,20 @@ namespace Backend.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("varchar(50)");
+
+                    b.Property<int?>("ScopeLocationId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ScopePaddyLotId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ScopeType")
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("ScopeZoneName")
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
 
                     b.Property<DateTime?>("StartedDate")
                         .HasColumnType("datetime(6)");
@@ -5210,6 +5569,10 @@ namespace Backend.Infrastructure.Migrations
                         .IsUnique()
                         .HasDatabaseName("UX_StockTake_STCode");
 
+                    b.HasIndex("ScopeLocationId");
+
+                    b.HasIndex("ScopePaddyLotId");
+
                     b.HasIndex("StockTakeStatusId");
 
                     b.HasIndex("WarehouseId");
@@ -5227,6 +5590,15 @@ namespace Backend.Infrastructure.Migrations
 
                     b.Property<decimal?>("ActualQuantity")
                         .HasColumnType("decimal(18,3)");
+
+                    b.Property<int?>("AdjustedBagCount")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("AdjustedWeightKg")
+                        .HasColumnType("decimal(18,3)");
+
+                    b.Property<int?>("CountedBagCount")
+                        .HasColumnType("int");
 
                     b.Property<int?>("CreatedBy")
                         .HasColumnType("int");
@@ -5267,11 +5639,18 @@ namespace Backend.Infrastructure.Migrations
                     b.Property<int>("StockTakeId")
                         .HasColumnType("int");
 
+                    b.Property<int>("SystemBagCount")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("SystemQuantity")
                         .HasColumnType("decimal(18,3)");
 
                     b.Property<int?>("UpdatedBy")
                         .HasColumnType("int");
+
+                    b.Property<string>("VarianceReason")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
 
                     b.HasKey("Id");
 
@@ -5286,6 +5665,117 @@ namespace Backend.Infrastructure.Migrations
                     b.HasIndex("StockTakeId");
 
                     b.ToTable("StockTakeItem", (string)null);
+                });
+
+            modelBuilder.Entity("Backend.Domain.Entities.StockTakeItemBag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BagNo")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Counted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<decimal?>("CountedWeightKg")
+                        .HasColumnType("decimal(18,3)");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Disposition")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)");
+
+                    b.Property<string>("DispositionNote")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
+
+                    b.Property<decimal?>("ImpurityPercent")
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<bool>("IsUnexpected")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<decimal?>("MoisturePercent")
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<string>("MoldLevel")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("PackagingStatus")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<int>("PaddyLotBagId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PestLevel")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<int>("PickSequence")
+                        .HasColumnType("int");
+
+                    b.Property<string>("QrCode")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("QualityNote")
+                        .HasMaxLength(1000)
+                        .HasColumnType("varchar(1000)");
+
+                    b.Property<string>("QualityResult")
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)");
+
+                    b.Property<int>("RestowSequence")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("ScannedByQr")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<int>("StockTakeItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SystemStackOrder")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("SystemWeightKg")
+                        .HasColumnType("decimal(18,3)");
+
+                    b.Property<int?>("TargetLocationId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PaddyLotBagId");
+
+                    b.HasIndex("TargetLocationId");
+
+                    b.HasIndex("StockTakeItemId", "PaddyLotBagId")
+                        .IsUnique()
+                        .HasDatabaseName("UX_StockTakeItemBag_Item_Bag");
+
+                    b.ToTable("StockTakeItemBag", (string)null);
                 });
 
             modelBuilder.Entity("Backend.Domain.Entities.StockTakeStatus", b =>
@@ -5437,6 +5927,102 @@ namespace Backend.Infrastructure.Migrations
                         .HasDatabaseName("UX_StockTransfer_OrgId_Code");
 
                     b.ToTable("StockTransfer", (string)null);
+                });
+
+            modelBuilder.Entity("Backend.Domain.Entities.StockTransferBag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BagId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Disposition")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)");
+
+                    b.Property<decimal?>("ImpurityPercent")
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("tinyint(1)");
+
+                    b.Property<DateTime?>("LastModifiedDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<decimal?>("MoisturePercent")
+                        .HasColumnType("decimal(5,2)");
+
+                    b.Property<string>("MoldLevel")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(500)
+                        .HasColumnType("varchar(500)");
+
+                    b.Property<string>("PackagingStatus")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("PestLevel")
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
+
+                    b.Property<string>("QualityNote")
+                        .HasMaxLength(1000)
+                        .HasColumnType("varchar(1000)");
+
+                    b.Property<string>("QualityResult")
+                        .HasMaxLength(30)
+                        .HasColumnType("varchar(30)");
+
+                    b.Property<int?>("QuarantineLocationId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SourceLotId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StockTransferItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TargetLotId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("WeightKg")
+                        .HasColumnType("decimal(18,3)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BagId")
+                        .HasDatabaseName("IX_StockTransferBag_BagId");
+
+                    b.HasIndex("QuarantineLocationId")
+                        .HasDatabaseName("IX_StockTransferBag_QuarantineLocationId");
+
+                    b.HasIndex("SourceLotId")
+                        .HasDatabaseName("IX_StockTransferBag_SourceLotId");
+
+                    b.HasIndex("StockTransferItemId")
+                        .HasDatabaseName("IX_StockTransferBag_StockTransferItemId");
+
+                    b.HasIndex("TargetLotId")
+                        .HasDatabaseName("IX_StockTransferBag_TargetLotId");
+
+                    b.ToTable("StockTransferBag", (string)null);
                 });
 
             modelBuilder.Entity("Backend.Domain.Entities.StockTransferItem", b =>
@@ -6379,6 +6965,53 @@ namespace Backend.Infrastructure.Migrations
                     b.Navigation("Organization");
                 });
 
+            modelBuilder.Entity("Backend.Domain.Entities.CustomerFeedback", b =>
+                {
+                    b.HasOne("Backend.Domain.Entities.OutboundOrder", "OutboundOrder")
+                        .WithMany()
+                        .HasForeignKey("OutboundOrderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Backend.Domain.Entities.OutboundOrderItem", "OutboundOrderItem")
+                        .WithMany()
+                        .HasForeignKey("OutboundOrderItemId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Backend.Domain.Entities.PaddyLotBagAllocation", "PaddyLotBagAllocation")
+                        .WithMany()
+                        .HasForeignKey("PaddyLotBagAllocationId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Backend.Domain.Entities.ProductVariant", "ProductVariant")
+                        .WithMany()
+                        .HasForeignKey("ProductVariantId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Backend.Domain.Entities.User", "ResolvedByUser")
+                        .WithMany()
+                        .HasForeignKey("ResolvedBy")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Backend.Domain.Entities.SalesOrder", "SalesOrder")
+                        .WithMany()
+                        .HasForeignKey("SalesOrderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("OutboundOrder");
+
+                    b.Navigation("OutboundOrderItem");
+
+                    b.Navigation("PaddyLotBagAllocation");
+
+                    b.Navigation("ProductVariant");
+
+                    b.Navigation("ResolvedByUser");
+
+                    b.Navigation("SalesOrder");
+                });
+
             modelBuilder.Entity("Backend.Domain.Entities.CustomerReturnOrder", b =>
                 {
                     b.HasOne("Backend.Domain.Entities.User", "ApprovedByUser")
@@ -6390,6 +7023,11 @@ namespace Backend.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("ConfirmedByUserId")
                         .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Backend.Domain.Entities.CustomerFeedback", "CustomerFeedback")
+                        .WithOne("CustomerReturnOrder")
+                        .HasForeignKey("Backend.Domain.Entities.CustomerReturnOrder", "CustomerFeedbackId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.HasOne("Backend.Domain.Entities.Customer", "Customer")
                         .WithMany()
@@ -6423,6 +7061,8 @@ namespace Backend.Infrastructure.Migrations
                     b.Navigation("ConfirmedByUser");
 
                     b.Navigation("Customer");
+
+                    b.Navigation("CustomerFeedback");
 
                     b.Navigation("CustomerReturnOrderStatus");
 
@@ -6500,6 +7140,11 @@ namespace Backend.Infrastructure.Migrations
                         .HasForeignKey("QuarantineLocationId")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("Backend.Domain.Entities.Location", "RejectedLocation")
+                        .WithMany()
+                        .HasForeignKey("RejectedLocationId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Backend.Domain.Entities.Location", "RestockLocation")
                         .WithMany()
                         .HasForeignKey("RestockLocationId")
@@ -6516,6 +7161,8 @@ namespace Backend.Infrastructure.Migrations
                     b.Navigation("ProductVariant");
 
                     b.Navigation("QuarantineLocation");
+
+                    b.Navigation("RejectedLocation");
 
                     b.Navigation("RestockLocation");
                 });
@@ -6603,6 +7250,11 @@ namespace Backend.Infrastructure.Migrations
                         .HasForeignKey("PurchaseOrderId")
                         .OnDelete(DeleteBehavior.SetNull);
 
+                    b.HasOne("Backend.Domain.Entities.StockTransfer", "StockTransfer")
+                        .WithMany()
+                        .HasForeignKey("StockTransferId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("Backend.Domain.Entities.Supplier", "Supplier")
                         .WithMany()
                         .HasForeignKey("SupplierId");
@@ -6622,6 +7274,8 @@ namespace Backend.Infrastructure.Migrations
                     b.Navigation("PaddyPurchaseReceipt");
 
                     b.Navigation("PurchaseOrder");
+
+                    b.Navigation("StockTransfer");
 
                     b.Navigation("Supplier");
 
@@ -7462,6 +8116,32 @@ namespace Backend.Infrastructure.Migrations
                     b.Navigation("PaddyLot");
                 });
 
+            modelBuilder.Entity("Backend.Domain.Entities.QualityInspectionBagResult", b =>
+                {
+                    b.HasOne("Backend.Domain.Entities.PaddyLotBag", "Bag")
+                        .WithMany("QualityResults")
+                        .HasForeignKey("BagId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Backend.Domain.Entities.User", "Inspector")
+                        .WithMany()
+                        .HasForeignKey("InspectorId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("Backend.Domain.Entities.QualityInspection", "Inspection")
+                        .WithMany("BagResults")
+                        .HasForeignKey("QualityInspectionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Bag");
+
+                    b.Navigation("Inspection");
+
+                    b.Navigation("Inspector");
+                });
+
             modelBuilder.Entity("Backend.Domain.Entities.ReturnToSupplierOrder", b =>
                 {
                     b.HasOne("Backend.Domain.Entities.User", "ApprovedByUser")
@@ -7613,6 +8293,16 @@ namespace Backend.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("ApprovedByUserId");
 
+                    b.HasOne("Backend.Domain.Entities.Location", "ScopeLocation")
+                        .WithMany()
+                        .HasForeignKey("ScopeLocationId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("Backend.Domain.Entities.PaddyLot", "ScopePaddyLot")
+                        .WithMany()
+                        .HasForeignKey("ScopePaddyLotId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.HasOne("Backend.Domain.Entities.StockTakeStatus", "StockTakeStatus")
                         .WithMany("StockTakes")
                         .HasForeignKey("StockTakeStatusId")
@@ -7626,6 +8316,10 @@ namespace Backend.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("ApprovedByUser");
+
+                    b.Navigation("ScopeLocation");
+
+                    b.Navigation("ScopePaddyLot");
 
                     b.Navigation("StockTakeStatus");
 
@@ -7669,6 +8363,32 @@ namespace Backend.Infrastructure.Migrations
                     b.Navigation("StockTake");
                 });
 
+            modelBuilder.Entity("Backend.Domain.Entities.StockTakeItemBag", b =>
+                {
+                    b.HasOne("Backend.Domain.Entities.PaddyLotBag", "PaddyLotBag")
+                        .WithMany()
+                        .HasForeignKey("PaddyLotBagId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Backend.Domain.Entities.StockTakeItem", "StockTakeItem")
+                        .WithMany("Bags")
+                        .HasForeignKey("StockTakeItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Backend.Domain.Entities.Location", "TargetLocation")
+                        .WithMany()
+                        .HasForeignKey("TargetLocationId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("PaddyLotBag");
+
+                    b.Navigation("StockTakeItem");
+
+                    b.Navigation("TargetLocation");
+                });
+
             modelBuilder.Entity("Backend.Domain.Entities.StockTransfer", b =>
                 {
                     b.HasOne("Backend.Domain.Entities.User", "AssignedUser")
@@ -7710,6 +8430,46 @@ namespace Backend.Infrastructure.Migrations
                     b.Navigation("ToWarehouse");
                 });
 
+            modelBuilder.Entity("Backend.Domain.Entities.StockTransferBag", b =>
+                {
+                    b.HasOne("Backend.Domain.Entities.PaddyLotBag", "Bag")
+                        .WithMany()
+                        .HasForeignKey("BagId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Backend.Domain.Entities.Location", "QuarantineLocation")
+                        .WithMany()
+                        .HasForeignKey("QuarantineLocationId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("Backend.Domain.Entities.PaddyLot", "SourceLot")
+                        .WithMany()
+                        .HasForeignKey("SourceLotId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("Backend.Domain.Entities.StockTransferItem", "StockTransferItem")
+                        .WithMany("Bags")
+                        .HasForeignKey("StockTransferItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Backend.Domain.Entities.PaddyLot", "TargetLot")
+                        .WithMany()
+                        .HasForeignKey("TargetLotId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Bag");
+
+                    b.Navigation("QuarantineLocation");
+
+                    b.Navigation("SourceLot");
+
+                    b.Navigation("StockTransferItem");
+
+                    b.Navigation("TargetLot");
+                });
+
             modelBuilder.Entity("Backend.Domain.Entities.StockTransferItem", b =>
                 {
                     b.HasOne("Backend.Domain.Entities.Location", "FromLocation")
@@ -7742,6 +8502,8 @@ namespace Backend.Infrastructure.Migrations
                     b.Navigation("FromLocation");
 
                     b.Navigation("PaddyLot");
+
+                    b.Navigation("Bags");
 
                     b.Navigation("ProductVariant");
 
@@ -7858,6 +8620,11 @@ namespace Backend.Infrastructure.Migrations
                     b.Navigation("SalesOrders");
                 });
 
+            modelBuilder.Entity("Backend.Domain.Entities.CustomerFeedback", b =>
+                {
+                    b.Navigation("CustomerReturnOrder");
+                });
+
             modelBuilder.Entity("Backend.Domain.Entities.CustomerReturnOrder", b =>
                 {
                     b.Navigation("Items");
@@ -7968,6 +8735,8 @@ namespace Backend.Infrastructure.Migrations
 
                     b.Navigation("Movements");
 
+                    b.Navigation("QualityResults");
+
                     b.Navigation("SplitBags");
                 });
 
@@ -8005,6 +8774,11 @@ namespace Backend.Infrastructure.Migrations
                     b.Navigation("PurchaseOrderItems");
                 });
 
+            modelBuilder.Entity("Backend.Domain.Entities.QualityInspection", b =>
+                {
+                    b.Navigation("BagResults");
+                });
+
             modelBuilder.Entity("Backend.Domain.Entities.ReturnToSupplierOrder", b =>
                 {
                     b.Navigation("Items");
@@ -8036,6 +8810,11 @@ namespace Backend.Infrastructure.Migrations
             modelBuilder.Entity("Backend.Domain.Entities.StockTake", b =>
                 {
                     b.Navigation("StockTakeItems");
+                });
+
+            modelBuilder.Entity("Backend.Domain.Entities.StockTakeItem", b =>
+                {
+                    b.Navigation("Bags");
                 });
 
             modelBuilder.Entity("Backend.Domain.Entities.StockTakeStatus", b =>

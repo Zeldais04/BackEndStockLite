@@ -54,6 +54,39 @@ namespace Backend.API.Controllers
             return BaseResult(result);
         }
 
+        /// <summary>Bao ở đỉnh cột nguồn có thể chọn để chuyển kho theo BAO (picker).</summary>
+        [HttpGet("source-bags")]
+        public async Task<IActionResult> GetSourceBagsAsync(
+            [FromQuery] int fromWarehouseId,
+            [FromQuery] int fromLocationId,
+            [FromQuery] int? productVariantId)
+        {
+            var result = await _service.GetSourceBagsAsync(fromWarehouseId, fromLocationId, productVariantId);
+            return BaseResult(result);
+        }
+
+        /// <summary>Gợi ý ô lưu ở kho đích (chọn ô tốt nhất) để tự điền vị trí đích.</summary>
+        [HttpGet("destination-suggestions")]
+        public async Task<IActionResult> GetDestinationSuggestionsAsync(
+            [FromQuery] int toWarehouseId,
+            [FromQuery] int productVariantId,
+            [FromQuery] decimal weightKg = 0)
+        {
+            var result = await _service.GetDestinationSuggestionsAsync(toWarehouseId, productVariantId, weightKg);
+            return BaseResult(result);
+        }
+
+        /// <summary>Gợi ý ô cách ly ở kho nguồn (cho bao không đạt chất lượng).</summary>
+        [HttpGet("quarantine-suggestions")]
+        public async Task<IActionResult> GetQuarantineSuggestionsAsync(
+            [FromQuery] int fromWarehouseId,
+            [FromQuery] int productVariantId,
+            [FromQuery] decimal weightKg = 0)
+        {
+            var result = await _service.GetQuarantineSuggestionsAsync(fromWarehouseId, productVariantId, weightKg);
+            return BaseResult(result);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody] CreateStockTransferDto dto)
         {

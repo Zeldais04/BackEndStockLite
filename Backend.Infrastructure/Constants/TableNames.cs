@@ -56,6 +56,7 @@ public static class TableNames
     public const string StockAlertConfig = nameof(StockAlertConfig);
     public const string StockTake = nameof(StockTake);
     public const string StockTakeItem = nameof(StockTakeItem);
+    public const string StockTakeItemBag = nameof(StockTakeItemBag);
     public const string StockTakeStatus = nameof(StockTakeStatus);
     public const string Supplier = nameof(Supplier);
     public const string UnitOfMeasure = nameof(UnitOfMeasure);
@@ -64,6 +65,7 @@ public static class TableNames
     public const string CustomerReturnOrder = nameof(CustomerReturnOrder);
     public const string CustomerReturnOrderItem = nameof(CustomerReturnOrderItem);
     public const string CustomerReturnOrderStatus = nameof(CustomerReturnOrderStatus);
+    public const string CustomerFeedback = nameof(CustomerFeedback);
     public const string ReturnToSupplierOrder = nameof(ReturnToSupplierOrder);
     public const string ReturnToSupplierOrderItem = nameof(ReturnToSupplierOrderItem);
     public const string ReturnToSupplierOrderStatus = nameof(ReturnToSupplierOrderStatus);
@@ -80,6 +82,7 @@ public static class TableNames
     public const string PaddyLotBagContent = nameof(PaddyLotBagContent);
     public const string PaddyLotBagMovement = nameof(PaddyLotBagMovement);
     public const string QualityInspection = nameof(QualityInspection);
+    public const string QualityInspectionBagResult = nameof(QualityInspectionBagResult);
     public const string MillingOrderStatus = nameof(MillingOrderStatus);
     public const string MillingYieldConfig = nameof(MillingYieldConfig);
     public const string MillingOrder = nameof(MillingOrder);
@@ -90,6 +93,7 @@ public static class TableNames
     public const string StockTransferStatus = nameof(StockTransferStatus);
     public const string StockTransfer = nameof(StockTransfer);
     public const string StockTransferItem = nameof(StockTransferItem);
+    public const string StockTransferBag = nameof(StockTransferBag);
 
     // ── Nhóm B: Chứng từ nguồn & Multi-tenant ─────────────────────────────────
     public const string Customer = nameof(Customer);
